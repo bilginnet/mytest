@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\PurchaseProcessed;
 use App\Models\Purchase;
 use App\Notifications\PurchaseStatusChanged;
 
@@ -16,7 +17,8 @@ class PurchaseObserver
     public function created(Purchase $purchase)
     {
         // @todo started job
-        request()->user()->notify(new PurchaseStatusChanged($purchase));
+        //request()->user()->notify(new PurchaseStatusChanged($purchase));
+        event(new PurchaseProcessed($purchase));
     }
 
     /**
@@ -30,7 +32,8 @@ class PurchaseObserver
         if($purchase->isDirty('status')){
             //$new_status = $purchase->status;
             //$old_status = $purchase->getOriginal('status');
-            request()->user()->notify(new PurchaseStatusChanged($purchase));
+            //request()->user()->notify(new PurchaseStatusChanged($purchase));
+            event(new PurchaseProcessed($purchase));
         }
     }
 

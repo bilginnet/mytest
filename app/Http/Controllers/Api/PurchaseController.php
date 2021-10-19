@@ -30,9 +30,6 @@ class PurchaseController extends Controller
             'status' => 'started',
         ]);
 
-        // @todo started job
-        $request->user()->notify(new PurchaseStatusChanged($purchase));
-
         return response()->json([
            'status' => 'ok'
         ]);
@@ -68,9 +65,6 @@ class PurchaseController extends Controller
             $purchase->update([
                 'status' => 'renewed',
             ]);
-
-            // @todo renewed job
-            $request->user()->notify(new PurchaseStatusChanged($purchase));
         }
     }
 
@@ -88,10 +82,6 @@ class PurchaseController extends Controller
         $purchase->update([
             'status' => 'canceled',
         ]);
-
-        // @todo canceled job
-        $request->user()->notify(new PurchaseStatusChanged($purchase));
-
     }
 
     /**
